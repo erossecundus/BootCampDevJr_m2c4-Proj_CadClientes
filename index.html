@@ -15,11 +15,14 @@
       <h2>Cadastro de Clientes:</h2>
     </header>
 
-    <main class="row justify-content-center shadow mt-5 p-5">
+    <main class="row shadow mt-5 p-5">
 
-        <!--Formulário de Cadastro-->
-        <section>
-          <form class="row g-3 mb-5">
+      <!--Formulário de Cadastro-->
+      <section class="mb-5">
+
+        <form>
+
+          <div class="row g-3">
             <div class="col-md-6">
               <label for="inputName" class="form-label">Nome</label>
               <input type="text" class="form-control" id="inputName">
@@ -30,7 +33,7 @@
             </div>
             <div class="col-md-3">
               <label for="inputPostal" class="form-label">Pesquise pelo CEP:</label>
-              <input type="text" class="form-control" id="inputPostal">
+              <input type="text" class="form-control" id="inputPostal" onblur="enableNumber(true); search();">
             </div>
             <div class="col-md-10">
               <label for="inputAddress" class="form-label">Endereço:</label>
@@ -52,54 +55,65 @@
               <label for="inputState" class="form-label">Estado:</label>
               <input type="text" class="form-control" id="inputState" disabled>
             </div>
-          </form>
-        </section>
+          </div>
+          <div class="row mt-3 text-center"">
+            <div class="col">
+              <button type="button" class="btn btn-primary">Salvar</button>
 
-        <!--Tabela de Clientes Cadastrados-->
-        <section>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome Completo</th>
-                <th scope="col">Endereço</th>
-                <th scope="col">CEP</th>
-                <th scope="col">Bairro</th>
-                <th scope="col">Cidade</th>
-                <th scope="col">Estado</th>
-              </tr>
-            </thead>
-            <tbody class="table-group-divider">
-              <tr>
-                <th scope="row">1</th>
-                <td>Nome da Silva</td>
-                <td>Rua dos Bobos, 0</td>
-                <td>18000-000</td>
-                <td>Vila Sezamo</td>
-                <td>Sorocity</td>
-                <td>SP</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </div>
+            </div>
+          
+          </div>
 
 
-    </main>
 
+
+
+
+        </form>
+
+      </section>
+
+      <!--Tabela de Clientes Cadastrados-->
+      <section>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome Completo</th>
+              <th scope="col">Endereço</th>
+              <th scope="col">CEP</th>
+              <th scope="col">Bairro</th>
+              <th scope="col">Cidade</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr>
+              <th scope="row">1</th>
+              <td>Nome da Silva</td>
+              <td>Rua dos Bobos, 0</td>
+              <td>18000-000</td>
+              <td>Vila Sezamo</td>
+              <td>Sorocity</td>
+              <td>SP</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
   </div>
 
 
-
-
-
+  </main>
+  </div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+    
   <script src="js/jquery-3.6.0.min.js"></script>
   <script src="js/jquery.mask.min.js"></script>
+  <script src="js/script.js"></script>
 </body>
 
 </html>
