@@ -1,12 +1,12 @@
 
-$('#inputPostal').mask('00000-000');
+$("#inputPostal").mask("00000-000");
 
 //guarda os clientes salvos
 var clients = [];
 
 //converte um CEP para número
 function convertToNumber(cepFormat) {
-  return cepFormat.replace('-', '');
+  return cepFormat.replace("-", "");
 }
 
 //valida o CEP digitado no input
@@ -14,25 +14,10 @@ function validateCEP() {
   var cep = convertToNumber(document.getElementById("inputPostal").value);
   if(!isNaN(cep) && cep.length == 8) {
     search(cep);
-    return 1;
   }
   else {
     showError("CEP inválido");
-    clearFormLocation();
-    disableNumber(true);
-    disableSave(true);
-    return 0;
   }
-
-}
-
-//habilita/desabilita o campo Número
-function disableNumber(value){
-  $("#inputNumber").prop("disabled", value);
-}
-
-function disableSave(value){
-  $("#btnSave").prop("disabled", value);
 }
 
 //busca os dados de um CEP válido
@@ -48,18 +33,22 @@ function search(cep) {
     }	
     else {
       showError("Não encontrado");
-      clearFormLocation();
-      disableNumber(true);
-      disableSave(true);
     }
-      
   });
+}
+
+//habilita/desabilita o campo de Número
+function disableNumber(value){
+  $("#inputNumber").prop("disabled", value);
 }
 
 //tratando erro de CEP
 function showError(msg) {
   document.getElementById("error").innerHTML = msg;
+  clearFormLocation();
+  disableNumber(true);
 }
+//limpando mensagem de erro
 function clearError() {
   document.getElementById("error").innerHTML = "";
 }
@@ -77,6 +66,7 @@ function clearFormLocation() {
   document.getElementById("inputNumber").value  = "";
   showLocation( {} );
 }
+
 //limpa o formulário inteiro
 function resetForm() {
   clearFormLocation();
@@ -87,32 +77,29 @@ function resetForm() {
 
 //salva um novo cliente
 function save() {
-    var newClient = {
-      id:       clients.length+1,
-      name:     `${document.getElementById("inputName").value} ${document.getElementById("inputSurname").value}`,
-      adress:   document.getElementById("inputAddress").value,
-      number:   document.getElementById("inputNumber").value,
-      postal:   document.getElementById("inputPostal").value,
-      district: document.getElementById("inputDistrict").value,
-      city:     document.getElementById("inputCity").value,
-      state:    document.getElementById("inputState").value,
-    }
-  
-    clients.push(newClient);
-    addNewRow(newClient);
-    
-    resetForm();
-    disableNumber(true);
-    disableSave(true);
-    console.log(newClient);
+  var newClient = {
+    id:       clients.length+1,
+    name:     `${document.getElementById("inputName").value} ${document.getElementById("inputSurname").value}`,
+    adress:   document.getElementById("inputAddress").value,
+    number:   document.getElementById("inputNumber").value,
+    postal:   document.getElementById("inputPostal").value,
+    district: document.getElementById("inputDistrict").value,
+    city:     document.getElementById("inputCity").value,
+    state:    document.getElementById("inputState").value,
+  }
+
+  clients.push(newClient);
+  addNewRow(newClient);
+  resetForm();
+  disableNumber(true);
 }
 
-//carregaria a tabela se tivessem dados salvos
+//carrega a tabela
 loadTable(); 
 
-//carrega a tabela
+//carrega a tabela com os dados salvos no array
 function loadTable() {
-  for(var client in clients) {
+  for(let client in clients) {
     addNewRow(client);
   }
 }
@@ -124,12 +111,14 @@ function addNewRow(client) {
   var newRow = table.insertRow();
 
   var idNode = document.createTextNode(client.id);
-  newRow.insertCell().appendChild(idNode);
+  var cell = newRow.insertCell();
+  cell.className = "fw-bold"
+  cell.appendChild(idNode);
 
   var nameNode = document.createTextNode(client.name);
   newRow.insertCell().appendChild(nameNode);
 
-  var adressNode = document.createTextNode(client.adress+", "+client.number);
+  var adressNode = document.createTextNode(client.adress + ", " + client.number);
   newRow.insertCell().appendChild(adressNode);
 
   var postalNode = document.createTextNode(client.postal);
@@ -143,17 +132,4 @@ function addNewRow(client) {
 
   var stateNode = document.createTextNode(client.state);
   newRow.insertCell().appendChild(stateNode);
-
-
-  
-  /*document.getElementById("clientTable").innerHTML += 
-    `<tr>
-      <th scope="row">1</th>
-      <td>Nome da Silva</td>
-      <td>Rua dos Bobos, 0</td>
-      <td>18000-000</td>
-      <td>Vila Sezamo</td>
-      <td>Sorocity</td>
-      <td>SP</td>
-    </tr>`*/
 }
