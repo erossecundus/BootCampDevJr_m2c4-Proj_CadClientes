@@ -11,12 +11,14 @@ function convertToNumber(cepFormat) {
 
 //valida o CEP digitado no input
 function validateCEP() {
-  var cep = convertToNumber(document.getElementById("inputPostal").value);
+  var cep = document.getElementById("inputPostal").value;
+  cep = convertToNumber(cep);
   if(!isNaN(cep) && cep.length == 8) {
     search(cep);
   }
   else {
     showError("CEP inválido");
+    return false;
   }
 }
 
@@ -26,13 +28,14 @@ function search(cep) {
 
   $.getJSON( url, (location) => {
     
-    if (!("erro" in location)) {
-      showLocation(location);
-      disableNumber(false);
-      clearError();
+    if ("erro" in location) {
+      showError("Não encontrado");
     }	
     else {
-      showError("Não encontrado");
+      showLocation(location);
+      disableNumber(false);
+      disableSave(false);
+      clearError();
     }
   });
 }
@@ -42,12 +45,20 @@ function disableNumber(value){
   $("#inputNumber").prop("disabled", value);
 }
 
+//habilita/desabilita botão salvar
+function disableSave(value){
+  $("#btnSave").prop("disabled", value);
+}
+
 //tratando erro de CEP
 function showError(msg) {
+  //document.getElementById("inputPostal").focus();
   document.getElementById("error").innerHTML = msg;
   clearFormLocation();
   disableNumber(true);
+  disableSave(true);
 }
+
 //limpando mensagem de erro
 function clearError() {
   document.getElementById("error").innerHTML = "";
@@ -76,6 +87,7 @@ function resetForm() {
 }
 
 //salva um novo cliente
+
 function save() {
   var newClient = {
     id:       clients.length+1,
@@ -90,9 +102,12 @@ function save() {
 
   clients.push(newClient);
   addNewRow(newClient);
-  resetForm();
   disableNumber(true);
+  disableSave(true);
+  resetForm();
 }
+
+
 
 //carrega a tabela
 loadTable(); 
